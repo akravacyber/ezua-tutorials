@@ -25,7 +25,7 @@ dag = DAG(
     },
     render_template_as_native_obj=True,
     access_control={
-        "role_hpedemo-user05": {
+        "role_hpedemo-user01": {
             "can_read",
             "can_edit",
             "can_delete"

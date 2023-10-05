@@ -36,15 +36,13 @@ default_args = {
     'email': ['airflow@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5)
+    'retries': 0,
 }
 
 dag = DAG(
     'kubernetes_sample',
     default_args=default_args,
-    # schedule_interval='*/5 * * * *',
-    dagrun_timeout=timedelta(seconds=5),
+    schedule_interval=timedelta(seconds=5),
     tags=['example'],
     access_control={
         'All': {

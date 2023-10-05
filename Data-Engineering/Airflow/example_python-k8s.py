@@ -42,7 +42,8 @@ default_args = {
 dag = DAG(
     'kubernetes_sample',
     default_args=default_args,
-    schedule_interval=timedelta(seconds=5),
+    schedule_interval=timedelta(minutes=5),
+    dagrun_timeout=timedelta(minutes=5),
     tags=['example'],
     access_control={
         'All': {

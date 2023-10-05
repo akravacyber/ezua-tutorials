@@ -32,6 +32,7 @@ from datetime import datetime, timedelta
 default_args = {
     'owner': 'airflow',
     'email': ['airflow@example.com'],
+    start_date=datetime.datetime(2021, 1, 1),
 }
 
 dag = DAG(

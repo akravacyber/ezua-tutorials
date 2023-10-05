@@ -44,7 +44,7 @@ dag = DAG(
     'kubernetes_sample',
     default_args=default_args,
     schedule_interval='*/5 * * * *',
-    dagrun_timeout=timedelta(seconds=5),
+    # dagrun_timeout=timedelta(seconds=5),
     tags=['example'],
     access_control={
         'All': {

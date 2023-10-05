@@ -32,7 +32,7 @@ from airflow.utils.dates import days_ago
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': days_ago(1),
+    'start_date': datetime.utcnow() - timedelta(minutes=1),
     'email': ['airflow@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,

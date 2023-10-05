@@ -55,7 +55,7 @@ dag = DAG(
 
 start = DummyOperator(task_id='run_this_first', dag=dag)
 
-python_task = KubernetesPodOperator(namespace='default',
+python_task = KubernetesPodOperator(namespace='hpedemo-user01',
                                     image="python:3.6",
                                     cmds=["python", "-c"],
                                     arguments=["print('hello world')"],
@@ -66,7 +66,7 @@ python_task = KubernetesPodOperator(namespace='default',
                                     dag=dag
                                     )
 
-bash_task = KubernetesPodOperator(namespace='default',
+bash_task = KubernetesPodOperator(namespace='hpedemo-user01',
                                   image="ubuntu:16.04",
                                   cmds=["bash", "-cx"],
                                   arguments=["date"],

@@ -31,8 +31,13 @@ from datetime import datetime, timedelta
 
 default_args = {
     'owner': 'airflow',
-    'email': ['airflow@example.com'],
+    'depends_on_past': False,
     'start_date': datetime.utcnow(),
+    'email': ['airflow@example.com'],
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5)
 }
 
 dag = DAG(

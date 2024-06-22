@@ -34,3 +34,6 @@ spec:
     - name: qwertyuiop
       persistentVolumeClaim:
         claimName: kubeflow-shared-pvc
+    - name: aaaaaaaa
+      persistentVolumeClaim:
+        claimName: user-pvc

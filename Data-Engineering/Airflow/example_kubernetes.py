@@ -30,34 +30,42 @@ log = logging.getLogger(__name__)
 
 
 default_args = {
-    'owner': 'airflow',
-    'start_date': days_ago(2)
+    "owner": "airflow",
+    "depends_on_past": False,
+    "start_date": days_ago(1),
+    "email": ["airflow@example.com"],
+    "email_on_failure": False,
+    "email_on_retry": False,
+    "max_active_runs": 1,
+    "retries": 0,
 }
 
-with DAG(
+dag = DAG(
     dag_id='example_kubernetes_operator',
     default_args=default_args,
     schedule_interval=None,
     tags=['example'],
-) as dag:
-    k = KubernetesPodOperator(
-        namespace='mlflow',
-        image="ubuntu:latest",
-        cmds=["bash", "-cx"],
-        arguments=["echo hello here"],
-        labels={"foo": "bar"},
-        name="airflow-test-pod",
-        task_id="task",
-        is_delete_operator_pod=False,
-        volumes=[
-            k8s.V1Volume(
-                name="test-volume",
-                persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name="mlflow-pvc"),
-            ),
-        ],
-        volume_mounts=[
-            k8s.V1VolumeMount(
-                name="test-volume", mount_path="/mnt/test", read_only=True
-            )
-        ],
-    )
+    access_control={"All": {"can_read", "can_edit", "can_delete"}},
+)
+
+k = KubernetesPodOperator(
+    dag=dag,
+    namespace='mlflow',
+    image="ubuntu:latest",
+    cmds=["bash", "-cx"],
+    arguments=["echo hello here"],
+    name="airflow-test-pod",
+    task_id="task",
+    is_delete_operator_pod=False,
+    volumes=[
+        k8s.V1Volume(
+            name="test-volume",
+            persistent_volume_claim=k8s.V1PersistentVolumeClaimVolumeSource(claim_name="mlflow-pvc"),
+        ),
+    ],
+    volume_mounts=[
+        k8s.V1VolumeMount(
+            name="test-volume", mount_path="/mnt/test", read_only=True
+        )
+    ],
+)
